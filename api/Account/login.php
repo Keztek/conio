@@ -44,22 +44,27 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
-    if (password_verify($password, $user['password'])) {
-        $payload = [
-            "iss" => "http://playerio.keztek.net",
-            "aud" => "http://playerio.keztek.net",
-            "iat" => time(),
-            "nbf" => time(),
-            "exp" => time() + (60 * 60 * 24 * 30 * 3),
-            "uuid" => $user['uuid']
-        ];
-        $jwt = JWT::encode($payload, $privateKey, 'RS256', $header['kid']);
-        header('Content-Type: application/json');
-        echo json_encode(array('Token' => $jwt));
+    if ($user['is_deleted'] == 0) {
+        if (password_verify($password, $user['password'])) {
+            $payload = [
+                "iss" => "http://playerio.keztek.net",
+                "aud" => "http://playerio.keztek.net",
+                "iat" => time(),
+                "nbf" => time(),
+                "exp" => time() + (60 * 60 * 24 * 30 * 3),
+                "uuid" => $user['uuid']
+            ];
+            $jwt = JWT::encode($payload, $privateKey, 'RS256', $header['kid']);
+            header('Content-Type: application/json');
+            echo json_encode(array('Token' => $jwt));
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(array('Error' => ErrorCodes::InvalidPassword));
+            exit;
+        }
     } else {
         header('Content-Type: application/json');
-        echo json_encode(array('Error' => ErrorCodes::InvalidPassword));
-        exit;
+        echo json_encode(array('Error' => ErrorCodes::UserDeleted));
     }
 } else {
     header('Content-Type: application/json');

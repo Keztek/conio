@@ -2,7 +2,7 @@
 
 include '../api/Account/db.php';
 
-$sql = "SELECT username, email, reg_date, uuid FROM accounts";
+$sql = "SELECT username, email, reg_date, uuid, is_deleted FROM accounts";
 $result = $con->query($sql);
 
 if ($result->num_rows > 0) {
@@ -142,14 +142,16 @@ $request_url = $_SERVER['REQUEST_URI'];
                             </tr>
                             <?php
                                 foreach ($rows as $row) {
-                                    echo '<tr class="colrow">
-	                		            	<td><img src="../Icon.svg" width="32" alt="Icon"></td>
-	                		            	<td width="100px;white-space:nowrap;">'.$row['uuid'].'</td>
-	                		            	<td width="100px;white-space:nowrap;">'.$row['username'].'</td>
-	                		            	<td>'.$row['email'].'</td>
-	                		            	<td align="right" nowrap="nowrap">'.$row['reg_date'].'</td>
-	                		            	<td><a rel="popbox" href="/'.$row['username'].'">Edit</a></td>
-	                		            </tr>';
+                                    if ($row['is_deleted'] == 0) {
+                                        echo '<tr class="colrow">
+	                		                	<td><img src="../Icon.svg" width="32" alt="Icon"></td>
+	                		                	<td width="100px;white-space:nowrap;">'.$row['uuid'].'</td>
+	                		                	<td width="100px;white-space:nowrap;">'.$row['username'].'</td>
+	                		                	<td>'.$row['email'].'</td>
+	                		                	<td align="right" nowrap="nowrap">'.$row['reg_date'].'</td>
+	                		                	<td><a rel="popbox" href="/'.$row['username'].'">Edit</a></td>
+	                		                </tr>';
+                                    }
                                 }
                             ?>
                             <tr class="actionrow"></tr>

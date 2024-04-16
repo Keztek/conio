@@ -9,6 +9,7 @@ class ErrorCodes {
 
     const PasswordUpdateSuccessful = "Password updated successfully.";
     const ErrorUpdatingPassword = "Error updating password.";
+    const UserDeleted = "User has been deleted.";
 }
 
 ?>
