@@ -1,0 +1,51 @@
+@import url('http://playerio.keztek.net/css/variables.css');
+
+#offsetbox th,
+#offsetbox tr.actionrow {
+    background-color: var(--lighter-black);
+}
+
+#offsetbox th,
+#offsetbox td {
+    padding: 8px 16px;
+}
+
+#offsetbox tr:nth-child(odd) {
+    background-color: var(--lighter-black);
+}
+
+#db-val {
+    color: var(--lighter-white);
+}
+
+#bigdbsearchresults {
+    background-color: transparent !important;
+}
+
+.bigdbobject {
+    margin: 0 0 16px 0;
+    background-color: var(--lighter-black) !important;
+    box-sizing: border-box;
+    border-radius: 0;
+}
+
+.objectkey {
+    height: 16px;
+    line-height: 16px;
+    margin-left: 12px;
+}
+
+.bigdbobject table th,
+.bigdbobject table td {
+    color: var(--lighter-white);
+    padding: 12px;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+table.box tr.colrow td {
+    background-color: transparent;
+    border-right-color: var(--dark-gray);
+    border-left-color: var(--dark-gray);
+    padding: 16px;
+}

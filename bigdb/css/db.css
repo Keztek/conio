@@ -1,0 +1,324 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+font,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent
+}
+
+.bigdbobject {
+    background-color: #eaeaea;
+    border: 2px solid #eaeaea;
+    border-top: 20px solid #eaeaea;
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-box-shadow: 1px 1px 3px #888;
+    -webkit-box-shadow: 1px 1px 3px #888;
+    -box-shadow: 1px 1px 3px #888;
+}
+
+.bigdbobject .bigdbobject {
+    border-top: 20px solid #eaeaea;
+    border-bottom: 2px solid #eaeaea;
+}
+
+.bigdbobject table {
+    margin-top: -1px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.bigdbobject table td {
+    border-left: 0px;
+    border-right: 0px;
+}
+
+.bigdbobject table th,
+.bigdbobject table td {
+    text-align: left;
+    padding: 5px;
+    border-top: 1px solid #eaeaea;
+}
+
+.bigdbobject table th {
+    background-color: #f6f6f6;
+    width: 100px;
+    padding-left: 10px;
+}
+
+.bigdbobject table th.array {
+    text-align: right;
+}
+
+.bigdbobject .bigdbobject table th {
+    padding-left: 20px;
+}
+
+.bigdbobject table td {
+    background-color: white;
+}
+
+.bigdbobject .noentries {
+    text-align: center;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.canchange table th.noentries:hover {
+    text-decoration: underline;
+    color: #29abe2;
+    cursor: pointer;
+}
+
+.canchange table td.plainvalue:hover {
+    text-decoration: underline;
+    color: #29abe2;
+    cursor: pointer;
+}
+
+.canchange table td.plainvalue:hover+.clicktoedit {
+    color: gray
+}
+
+.objectactions,
+.expandarrow,
+.objectkey {
+    height: 20px;
+    float: right;
+    outline: none;
+    margin-top: -20px;
+    line-height: 20px;
+    margin-right: 10px;
+    float: left;
+}
+
+.objectactions {
+    float: right;
+}
+
+.objectactions img {
+    margin-left: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.objectactions img:hover {
+    top: -1px;
+}
+
+.objectkey {
+    margin-left: 11px;
+}
+
+.bigdb-query-table #objectkey {
+    width: 100%;
+}
+
+.frontpagetop a.button,
+.frontpagevideosection a.button,
+a.sdkbutton {
+    display: block;
+    background-color: #1581f3;
+    border: 1px solid #0966c9;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    padding: 13px 5px 13px 5px;
+    margin-top: 10px;
+    border-radius: 2px;
+    max-width: 300px;
+}
+
+.frontpagetop a.button span,
+.frontpagevideosection a.button span,
+a.sdkbutton span {
+    display: block;
+    font-size: 14px;
+}
+
+.frontpagetop a.button:hover,
+.frontpagevideosection a.button:hover,
+a.sdkbutton:hover {
+    text-decoration: none;
+    background-color: #3189e5;
+}
+
+a.sdkbutton {
+    margin: 10px auto 0px auto;
+}
+
+a.button,
+button {
+    background-color: #2694f6;
+    border: 0px solid white;
+    display: inline-block;
+    margin: 0 0px 0 0;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: normal;
+    height: 26px;
+    line-height: 26px;
+    white-space: nowrap;
+    vertical-align: center;
+    width: auto;
+    overflow-y: hidden;
+    padding: 0px 15px 0px 15px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+}
+
+.button img,
+button img {
+    display: none
+}
+
+a.button:hover,
+button:hover {
+    background-color: #1694db;
+}
+
+a.button:active,
+button:active {
+    background-color: #138acd;
+}
+
+/*a.button.positive, button.positive{background-color:#b4cb47;}*/
+a.button.negative,
+button.negative {
+    background-color: #ff4e4a;
+}
+
+/*
+
+a.button:hover, button:hover{background-position:0px -0px;border-color:#6b6b6b;}
+a.button.positive:hover, button.positive:hover{background-position:0px -40px;border-color:#43a85f;}
+a.button.negative:hover, button.negative:hover{background-position:0px -80px;border-color:#e05d5d;}*/
+a.button.disabled,
+button.disabled {
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+
+a.button.disabled:hover,
+button.disabled:hover {
+    background-position: 0px -10px;
+    border: 1px solid #989898;
+}
+
+a.button.cancel,
+button.cancel {
+    background-color: #bbbbbb;
+}
+
+a.button.cancel:hover,
+button.cancel:hover {
+    background-color: #cccccc;
+}
+
+a.button.leftmargin,
+button.leftmargin {
+    margin-left: 3px;
+}
+
+a.button.rightmargin,
+button.rightmargin {
+    margin-right: 3px;
+}
+
+
+button img,
+a.button img {
+    margin: 0 3px -3px 0 !important;
+    padding: 0;
+    border: none;
+    width: 16px;
+    height: 16px;
+}
+
+button.tightleft,
+a.button.tightleft {
+    margin-top: -3px;
+    margin-right: 6px;
+    margin-bottom: -6px;
+    float: left;
+}
+
+button.tightright,
+a.button.tightright {
+    margin-top: -3px;
+    margin-left: 6px;
+    margin-bottom: -6px;
+    float: right;
+}
+
+.cluster-server a.button {
+    float: right;
+}

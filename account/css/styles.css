@@ -1,0 +1,54 @@
+@import url('http://playerio.keztek.net/css/variables.css');
+
+body {}
+
+table {
+    border-collapse: collapse;
+    font-family: "Raleway", sans-serif;
+    border: 0px solid transparent;
+}
+
+.box {
+    border: 0px solid transparent;
+}
+
+table.box {
+    width: 100%;
+    border-spacing: 1px;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+    background-color: var(--darker-black) !important;
+}
+
+table.box th {
+    color: var(--lighter-white);
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+table.box td {
+    border: 0px solid transparent;
+}
+
+table.box tr.actionrow td {
+    background-color: var(--lighter-black);
+    border-right-color: var(--dark-gray);
+    border-left-color: var(--dark-gray);
+}
+
+table.box tr.colrow td {
+    background-color: transparent;
+    line-height: 32px;
+    border-right-color: var(--dark-gray);
+    border-left-color: var(--dark-gray);
+    padding: 16px 16px 4px 16px;
+}
+
+table.box tr.colrow {
+    background-color: var(--darker-black);
+}
+
+table.box tr.colrow:nth-child(odd) {
+    background-color: var(--lighter-black) !important;
+}
