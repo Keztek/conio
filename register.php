@@ -3,11 +3,11 @@
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Origin: *');
 
-require_once '../../vendor/autoload.php';
+require_once 'vendor/autoload.php';
 use Firebase\JWT\JWT;
-require('error_codes.php');
+require('api/Account/error_codes.php');
 require('db.php');
-$privateKey = file_get_contents('../../private/private.pem');
+$privateKey = file_get_contents('private/private.pem');
 $header = [
     'typ' => 'JWT',
     'alg' => 'HS256',
@@ -29,7 +29,7 @@ if (isset($_POST['password'])) {
 }
 
 if (isset($username) && isset($email) && isset($password)) {
-    $sql = "CREATE TABLE IF NOT EXISTS accounts (
+    $sql = "CREATE TABLE IF NOT EXISTS webaccounts (
         id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(25) NOT NULL,
         email VARCHAR(255) NOT NULL,
@@ -42,7 +42,7 @@ if (isset($username) && isset($email) && isset($password)) {
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $checkUsernameSql = "SELECT * FROM accounts WHERE username='$username'";
+    $checkUsernameSql = "SELECT * FROM webaccounts WHERE username='$username'";
     $existingUser = $con->query($checkUsernameSql);
 
     if ($existingUser->num_rows > 0) {
@@ -51,7 +51,7 @@ if (isset($username) && isset($email) && isset($password)) {
     } else {
         $uuid = generateUuid4();
 
-        $stmt = $con->prepare("INSERT INTO accounts (username, email, password, uuid) VALUES (?, ?, ?, ?)");
+        $stmt = $con->prepare("INSERT INTO webaccounts (username, email, password, uuid) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $username, $email, $hashedPassword, $uuid);
         if ($stmt->execute()) {
             $payload = array(
@@ -65,6 +65,8 @@ if (isset($username) && isset($email) && isset($password)) {
             $jwt = JWT::encode($payload, $privateKey, 'RS256', $header['kid']);
             header('Content-Type: application/json');
             echo json_encode(array('Token' => $jwt));
+            setcookie("authtoken", $jwt, time() + (60 * 60 * 24 * 30 * 3));
+            header("Location: https://conio.keztek.net");
         } else {
             $response = array('Error' => ErrorCodes::ErrorRegistering);
             header('Content-Type: application/json');
@@ -83,3 +85,19 @@ function generateUuid4() {
 }
 
 ?>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="register.php" method="post">
+        <input type="text" name="username" id="">
+        <input type="text" name="email" id="">
+        <input type="password" name="password" id="">
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>

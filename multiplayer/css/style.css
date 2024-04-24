@@ -1,7 +1,3 @@
-@import url('https://conio.keztek.net/css/variables.css');
-
-body {}
-
 table {
     border-collapse: collapse;
     font-family: "Raleway", sans-serif;
@@ -42,7 +38,7 @@ table.box tr.colrow td {
     line-height: 32px;
     border-right-color: var(--dark-gray);
     border-left-color: var(--dark-gray);
-    padding: 16px 16px 4px 16px;
+    padding: 4px 16px 4px 16px;
 }
 
 table.box tr.colrow {

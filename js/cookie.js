@@ -27,23 +27,23 @@ function updatePageStyle(mode) {
     let nextMode, modeIcon;
     switch (mode) {
         case "dark":
-            document.getElementById("themeStylesheet").href = "http://conio.keztek.net/css/darkmode.css";
+            document.getElementById("themeStylesheet").href = "https://conio.keztek.net/css/darkmode.css";
             nextMode = "light";
             modeIcon = '<i class="fa-solid fa-moon"></i>';
             break;
         case "light":
-            document.getElementById("themeStylesheet").href = "http://conio.keztek.net/css/lightmode.css";
+            document.getElementById("themeStylesheet").href = "https://conio.keztek.net/css/lightmode.css";
             nextMode = "system";
             modeIcon = '<i class="fa-solid fa-sun"></i>';
             break;
         case "system":
-            document.getElementById("themeStylesheet").href = "http://conio.keztek.net/css/systemmode.css";
+            document.getElementById("themeStylesheet").href = "https://conio.keztek.net/css/systemmode.css";
             nextMode = "dark";
             modeIcon = '<i class="fa-solid fa-gear"></i>';
             break;
         default:
             // Default to system mode if the mode is undefined or not recognized
-            document.getElementById("themeStylesheet").href = "http://conio.keztek.net/css/systemmode.css";
+            document.getElementById("themeStylesheet").href = "https://conio.keztek.net/css/systemmode.css";
             nextMode = "dark";
             modeIcon = '<i class="fa-solid fa-gear"></i>';
             break;

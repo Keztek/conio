@@ -1,5 +1,20 @@
 <?php
 
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Origin: *');
+
+require_once '../vendor/autoload.php';
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+require('../db.php');
+
+$publicKey = file_get_contents('../private/public.pem');
+$header = [
+    'typ' => 'JWT',
+    'alg' => 'HS256',
+    'kid' => 'q321q321'
+];
+
 include '../api/Account/db.php';
 
 $sql = "SELECT username, email, reg_date, uuid, is_deleted FROM accounts";
@@ -25,8 +40,50 @@ if ($_COOKIE['mode'] == 'system') {
     $mode = '<i class="fa-solid fa-gear"></i>';
 }
 
-$base_url = 'http://conio.keztek.net';
+$base_url = 'https://conio.keztek.net';
 $request_url = $_SERVER['REQUEST_URI'];
+
+$issuer = "https://conio.keztek.net";
+$audience = "https://conio.keztek.net";
+
+if (isset($_COOKIE['authtoken'])) {
+    $token = $_COOKIE['authtoken'];
+
+    if (empty($token)) {
+        echo json_encode(['Error' => 'Token not provided']);
+        exit;
+    }
+
+    $allowedAlgorithms = ['RS256'];
+
+    try {
+        $decoded = JWT::decode($token, new Key($publicKey, 'RS256'));
+
+        if ($decoded->iss !== $issuer) {
+            throw new Exception('Invalid issuer');
+        }
+        if ($decoded->aud !== $audience) {
+            throw new Exception('Invalid audience');
+        }
+
+        $uuidClaim = $decoded->uuid ?? null;
+
+        $sql = "SELECT * FROM webaccounts WHERE uuid = ?";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("s", $uuidClaim);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+        }
+
+        //echo json_encode($decodedArray);
+    } catch (Exception $e) {
+        header('Content-Type: application/json');
+        echo json_encode(['Error' => 'Invalid token']);
+    }
+}
 
 ?>
 
@@ -35,12 +92,12 @@ $request_url = $_SERVER['REQUEST_URI'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ConIO, up and coming tools and services for online game developers!</title>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400|Roboto+Slab:700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="http://conio.keztek.net/css/styles.css"/>
-    <link rel="stylesheet" href="http://conio.keztek.net/account/css/styles.css"/>
-    <link id="themeStylesheet" rel="stylesheet" href="http://conio.keztek.net/css/<?php echo $_COOKIE['mode']; ?>mode.css"/>
-    <script src="http://conio.keztek.net/js/cookie.js"></script>
+    <link rel="stylesheet" href="https://conio.keztek.net/css/styles.css"/>
+    <link rel="stylesheet" href="https://conio.keztek.net/account/css/styles.css"/>
+    <link id="themeStylesheet" rel="stylesheet" href="https://conio.keztek.net/css/<?php echo $_COOKIE['mode']; ?>mode.css"/>
+    <script src="https://conio.keztek.net/js/cookie.js"></script>
     <script src="https://kit.fontawesome.com/84d944f889.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -65,6 +122,20 @@ $request_url = $_SERVER['REQUEST_URI'];
                         </li>
                     </ul>
                 </nav>
+                <div id="accountinfo">
+                    <?php
+                    if (!isset($_COOKIE['authtoken'])) {
+                        echo '<a href="/register.php">Sign Up</a>';
+                        echo ' | ';
+                        echo '<a href="/login.php">Sign In</a>';
+                    } else {
+
+                        echo '<a href="#" class="dropdownlink" data-dropdown="accountdropdown">'.$user['username'].'</a>';
+                        echo '<span class="dropdownindicator"></span>';
+                        echo '<nav class="dropdown" id="accountdropdown"><a href="/my/go/account">My Account</a><a href="/logout">Signout</a><div class="sourcearrow"></div></nav>';
+                    }
+                    ?>
+                </div>
             </div>
         </header>
         <div class="adminheader">

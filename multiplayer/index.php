@@ -1,5 +1,20 @@
 <?php
 
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Origin: *');
+
+require_once '../vendor/autoload.php';
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+require('../db.php');
+
+$publicKey = file_get_contents('../private/public.pem');
+$header = [
+    'typ' => 'JWT',
+    'alg' => 'HS256',
+    'kid' => 'q321q321'
+];
+
 //$_COOKIE['mode'] = 'dark';
 if ($_COOKIE['mode'] == 'dark') {
     $nextMode = "light";
@@ -17,6 +32,48 @@ if ($_COOKIE['mode'] == 'system') {
 $base_url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
 $request_url = $_SERVER['REQUEST_URI'];
 
+$issuer = "https://conio.keztek.net";
+$audience = "https://conio.keztek.net";
+
+if (isset($_COOKIE['authtoken'])) {
+    $token = $_COOKIE['authtoken'];
+
+    if (empty($token)) {
+        echo json_encode(['Error' => 'Token not provided']);
+        exit;
+    }
+
+    $allowedAlgorithms = ['RS256'];
+
+    try {
+        $decoded = JWT::decode($token, new Key($publicKey, 'RS256'));
+
+        if ($decoded->iss !== $issuer) {
+            throw new Exception('Invalid issuer');
+        }
+        if ($decoded->aud !== $audience) {
+            throw new Exception('Invalid audience');
+        }
+
+        $uuidClaim = $decoded->uuid ?? null;
+
+        $sql = "SELECT * FROM webaccounts WHERE uuid = ?";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("s", $uuidClaim);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+        }
+
+        //echo json_encode($decodedArray);
+    } catch (Exception $e) {
+        header('Content-Type: application/json');
+        echo json_encode(['Error' => 'Invalid token']);
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -24,12 +81,12 @@ $request_url = $_SERVER['REQUEST_URI'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ConIO, up and coming tools and services for online game developers!</title>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400|Roboto+Slab:700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="<?php echo $base_url; ?>/css/styles.css"/>
-    <link rel="stylesheet" href="css/styles.css"/>
-    <link id="themeStylesheet" rel="stylesheet" href="css/<?php echo $_COOKIE['mode']; ?>mode.css"/>
-    <script src="js/cookie.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link id="themeStylesheet" rel="stylesheet" href="https://conio.keztek.net/css/<?php echo $_COOKIE['mode']; ?>mode.css"/>
+    <script src="https://conio.keztek.net/js/cookie.js"></script>
     <script src="https://kit.fontawesome.com/84d944f889.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -54,6 +111,20 @@ $request_url = $_SERVER['REQUEST_URI'];
                         </li>
                     </ul>
                 </nav>
+                <div id="accountinfo">
+                    <?php
+                    if (!isset($_COOKIE['authtoken'])) {
+                        echo '<a href="/register.php">Sign Up</a>';
+                        echo ' | ';
+                        echo '<a href="/login.php">Sign In</a>';
+                    } else {
+
+                        echo '<a href="#" class="dropdownlink" data-dropdown="accountdropdown">'.$user['username'].'</a>';
+                        echo '<span class="dropdownindicator"></span>';
+                        echo '<nav class="dropdown" id="accountdropdown"><a href="/my/go/account">My Account</a><a href="/logout">Signout</a><div class="sourcearrow"></div></nav>';
+                    }
+                    ?>
+                </div>
             </div>
         </header>
         <div class="adminheader">
@@ -77,8 +148,7 @@ $request_url = $_SERVER['REQUEST_URI'];
                     <ul class="menu active">
                         <li>
                             <a href="<?php echo $base_url; ?>/bigdb/">Database</a>
-                            <ul class="menu active" id="db-list">
-                            </ul>
+                            <ul class="menu active" id="db-list"></ul>
                         </li>
                         <li>
                             <a href="<?php echo $base_url; ?>/multiplayer/" class="active">Multiplayer</a>
@@ -93,7 +163,18 @@ $request_url = $_SERVER['REQUEST_URI'];
                 <div class="innermainrail">
                     <div class="boxtabs"></div>
                     <div class="offsetbox">
-                    
+                        <table class="box">
+                            <tbody id="offsetbox">
+                                <tr class="colrow">
+                                    <th style="width:768px">Room Id</th>
+                                    <th style="width:128px">Type</th>
+                                    <th style="width:128px"></th>
+                                    <th style="width:64px">Players</th>
+                                    <th style="width:64px;text-align:right"></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,5 +182,6 @@ $request_url = $_SERVER['REQUEST_URI'];
     </div>
     <footer></footer>
     <div class="bodyend"></div>
+    <script src="js/multiplayer.js"></script>
 </body>
 </html>

@@ -1,10 +1,12 @@
 <?php
 
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Origin: *');
+
 require_once '../../vendor/autoload.php';
 use Firebase\JWT\JWT;
 require('error_codes.php');
 require('db.php');
-//$key = "WP'C,ezro>28:w#£7U.2#wk=";
 $privateKey = file_get_contents('../../private/private.pem');
 $header = [
     'typ' => 'JWT',
@@ -14,12 +16,6 @@ $header = [
 
 if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
-}
-
-if (isset($_SERVER['HTTP_ORIGIN'])) {
-    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-    header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Max-Age: 86400');
 }
 
 $username = $_POST['username'];
@@ -47,8 +43,8 @@ if ($result->num_rows > 0) {
     if ($user['is_deleted'] == 0) {
         if (password_verify($password, $user['password'])) {
             $payload = [
-                "iss" => "http://playerio.keztek.net",
-                "aud" => "http://playerio.keztek.net",
+                "iss" => "https://conio.keztek.net",
+                "aud" => "https://conio.keztek.net",
                 "iat" => time(),
                 "nbf" => time(),
                 "exp" => time() + (60 * 60 * 24 * 30 * 3),
