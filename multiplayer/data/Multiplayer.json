@@ -1,14 +1,4 @@
 {
-  "Lobby": [
-    {
-      "70f8cdf1-7916-41fa-9d29-b55872842273": {
-        "Type": "LobbyRoom",
-        "Players": [
-          "70f8cdf1-7916-41fa-9d29-b55872842273"
-        ],
-        "MaxPlayers": 1
-      }
-    }
-  ],
+  "Lobby": [],
   "Game": []
 }
