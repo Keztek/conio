@@ -1,4 +1,8 @@
-private/
-bigdb/data/
-./private/
-./bigdb/data/
+bigdb/data/*
+!bigdb/data/.gitkeep
+
+multiplayer/data/*
+!multiplayer/data/.gitkeep
+
+private/*
+!private/.gitkeep
