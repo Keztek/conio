@@ -64,7 +64,7 @@ if ($result->num_rows > 0) {
     }
 } else {
     header('Content-Type: application/json');
-    echo json_encode(array('Error' => ErrorCodes::UserNotFound));
+    echo json_encode(array('Error' => ErrorCodes::UsernameNotFound));
 }
 
 $con->close();

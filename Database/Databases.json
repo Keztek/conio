@@ -1,0 +1,14 @@
+{
+  "Friends": {
+    "Description": ""
+  },
+  "Usernames": {
+    "Description": ""
+  },
+  "Users": {
+    "Description": "This is a built in table that stores all the player objects"
+  },
+  "Worlds": {
+    "Description": ""
+  }
+}

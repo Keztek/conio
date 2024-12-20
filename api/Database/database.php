@@ -1,6 +1,6 @@
 <?php
 
-$databasePath = "../../bigdb/data";
+$databasePath = "../../Database/data";
 $databases = [];
 
 function refreshDatabases() {

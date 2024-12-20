@@ -1,3 +1,11 @@
+.server-status.online i {
+    color: var(--emerald);
+}
+
+.server-status.offline i {
+    color: var(--red);
+}
+
 table {
     border-collapse: collapse;
     font-family: "Raleway", sans-serif;
@@ -39,12 +47,4 @@ table.box tr.colrow td {
     border-right-color: var(--dark-gray);
     border-left-color: var(--dark-gray);
     padding: 4px 16px 4px 16px;
-}
-
-table.box tr.colrow {
-    background-color: var(--darker-black);
-}
-
-table.box tr.colrow:nth-child(odd) {
-    background-color: var(--lighter-black) !important;
 }

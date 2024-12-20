@@ -82,6 +82,7 @@ if (isset($_COOKIE['authtoken'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ConIO, up and coming tools and services for online game developers!</title>
+    <link rel="shortcut icon" href="https://conio.keztek.net/Icon.svg" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Raleway:400|Roboto+Slab:700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="<?php echo $base_url; ?>/css/styles.css"/>
     <link rel="stylesheet" href="css/style.css">
@@ -147,14 +148,20 @@ if (isset($_COOKIE['authtoken'])) {
                 <nav>
                     <ul class="menu active">
                         <li>
-                            <a href="<?php echo $base_url; ?>/bigdb/">Database</a>
+                            <a href="<?php echo $base_url; ?>/Account/">Account</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $base_url; ?>/Database/">Database</a>
                             <ul class="menu active" id="db-list"></ul>
                         </li>
                         <li>
-                            <a href="<?php echo $base_url; ?>/multiplayer/" class="active">Multiplayer</a>
+                            <a href="<?php echo $base_url; ?>/ErrorLog/">Error log</a>
                         </li>
                         <li>
-                            <a href="<?php echo $base_url; ?>/account/">Account</a>
+                            <a href="<?php echo $base_url; ?>/Multiplayer/" class="active">Multiplayer</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $base_url; ?>/Store/">Store</a>
                         </li>
                     </ul>
                 </nav>
@@ -163,6 +170,11 @@ if (isset($_COOKIE['authtoken'])) {
                 <div class="innermainrail">
                     <div class="boxtabs"></div>
                     <div class="offsetbox">
+                        <?php
+
+                        include('../api/Multiplayer/serverStatus.php');
+
+                        ?>
                         <table class="box">
                             <tbody id="offsetbox">
                                 <tr class="colrow">
@@ -180,7 +192,44 @@ if (isset($_COOKIE['authtoken'])) {
         </div>
         <div style="clear:both"></div>
     </div>
-    <footer></footer>
+    <footer>
+    	<div class="footertop">
+    		<div class="page">
+                <?php
+                
+                $sql = "SELECT * FROM about ORDER BY id ASC";
+                $result = $con->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo $row['body'];
+                    }
+                }
+
+                ?>
+    			<div style="clear:both"></div>
+    		</div>
+    	</div>
+    	<div class="footerend">
+    		<div class="page">
+    			<a href="mailto:hello@playerio.com">conio@keztek.net</a>
+    			<div class="rightfooter">
+    				<a href="/status">Service Status</a>
+    				<a href="/privacypolicy">Privacy Policy</a>
+    				<a href="/termsofservice">Terms of Service</a>
+    				© Keztek Ltd.
+    			</div>
+    		</div>
+    	</div>
+    	<script>
+    	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    	  ga('create', 'UA-92600566-2', 'auto');
+    	  ga('send', 'pageview');
+    	</script>
+    </footer>
     <div class="bodyend"></div>
     <script src="js/multiplayer.js"></script>
 </body>

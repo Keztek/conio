@@ -1,0 +1,21 @@
+:root {
+    --bgcolor1: var(--darker-black);
+    --bgcolor2: var(--black);
+    --bgcolor3: var(--lighter-black);
+    --fgcolor: var(--lighter-white);
+    --accent: var(--red);
+}
+
+.modeBtn {
+    background-color: var(--bgcolor1);
+    position: fixed;
+    color: var(--fgcolor);
+    border-radius: 0;
+    width: 60px;
+    height: 60px;
+    font-size: 24;
+}
+
+.modeBtn:hover {
+    background-color: var(--bgcolor1);
+}

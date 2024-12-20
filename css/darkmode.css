@@ -7,7 +7,7 @@
 }
 
 .modeBtn {
-    background-color: var(--bgcolor1);
+    background-color: transparent;
     position: fixed;
     color: var(--fgcolor);
     border-radius: 0;
@@ -17,5 +17,61 @@
 }
 
 .modeBtn:hover {
-    background-color: var(--bgcolor1);
+    background-color: transparent;
+    color: var(--accent);
+}
+
+table.box tr.colrow {
+    background-color: var(--darker-black);
+}
+
+table.box tr.colrow:nth-child(odd) {
+    background-color: var(--lighter-black) !important;
+}
+
+#offsetbox tr:nth-child(odd) {
+    background-color: var(--lighter-black);
+}
+
+#offsetbox th,
+#offsetbox tr.actionrow {
+    background-color: var(--lighter-black);
+}
+
+table.box tr.actionrow td {
+    background-color: var(--lighter-black) !important;
+}
+
+table.box th {
+    color: var(--lighter-white);
+}
+
+.bigdbobject table th,
+.bigdbobject table td {
+    color: var(--lighter-white);
+}
+
+.footercol {
+    color: var(--darker-white);
+}
+
+footer a,
+footer a:hover {
+    color: var(--lighter-white);
+}
+
+.footerend .page {
+    color: var(--darker-white);
+}
+
+.footerend a {
+    color: var(--lighter-white);
+}
+
+h1 {
+    color: var(--lighter-white);
+}
+
+.focus {
+    background-color: var(--lighter-black);
 }

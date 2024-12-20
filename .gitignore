@@ -6,3 +6,5 @@ multiplayer/data/*
 
 private/*
 !private/.gitkeep
+
+*.txt

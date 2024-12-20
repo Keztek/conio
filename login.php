@@ -58,7 +58,7 @@ if (isset($username) && isset($password)) {
                 $jwt = JWT::encode($payload, $privateKey, 'RS256', $header['kid']);
                 header('Content-Type: application/json');
                 echo json_encode(array('Token' => $jwt));
-                setcookie("authtoken", $jwt, time() + (60 * 60 * 24 * 30 * 3));
+                setcookie("authtoken", $jwt, time() + (60 * 60 * 24 * 30 * 3), "/", "conio.keztek.net");
                 header("Location: https://conio.keztek.net");
             } else {
                 header('Content-Type: application/json');

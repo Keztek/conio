@@ -25,6 +25,19 @@ function getMultiplayerData() {
         .catch(error => console.error('Error:', error));
 }
 
+function pingServer() {
+    const socket = new WebSocket('wss://api.conio.keztek.net:9013');
+
+    socket.onopen = function () {
+        console.log('Server is running');
+        socket.close();
+    };
+    socket.onerror = function (error) {
+        //console.error('Error connecting to server:', error);
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     getMultiplayerData();
+    //setInterval(pingServer, 5000);
 });
